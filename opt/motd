@@ -1,0 +1,30 @@
+#!/bin/bash
+
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+echo -e "${GREEN}"
+
+uptime_human=$(uptime -p)
+
+sessions=$(who | wc -l)
+
+cpu_load=$(awk '{printf "%s, %s, %s", $1, $2, $3}' /proc/loadavg)
+
+ram_usage=$(free -h | awk '/^Mem:/ {print $3 "/" $2}')
+
+user_device=''
+
+msg=$'=======================================\n'
+msg+=$'   Welcome to $user_device \n'
+msg+=$'=======================================\n\n'
+msg+="Uptime: $uptime_human"$'\n'
+msg+="Active sessions: $sessions"$'\n'
+msg+="CPU Load: $cpu_load"$'\n'
+msg+="RAM Usage: $ram_usage"
+
+
+clear
+echo "$msg" | /usr/games/cowsay -n -f tux
+
+echo -e "${NC}"
