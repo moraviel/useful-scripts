@@ -1,0 +1,14 @@
+#!/bin/bash
+
+CONFIGS_DIR="/opt/configs"
+
+cd "$CONFIGS_DIR" || exit 1
+
+for dir in */; do
+  if [ -f "${dir}docker-compose.yml" ]; then
+    echo "Pulling: $dir"
+    (cd "$dir" && docker compose down)
+  else
+    echo "There is no docker-compose.yml in $dir, skipping..."
+  fi
+done

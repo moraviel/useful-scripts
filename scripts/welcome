@@ -1,0 +1,2 @@
+#!/bin/bash
+clear && /etc/update-motd.d/01-welcome
