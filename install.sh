@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-BASE_URL="https://git.moraviel.dev/oss/useful-scripts"
+BASE_URL="https://useful-scripts.pages.moraviel.dev"
 
 if [ ! -t 0 ]; then
     exec </dev/tty
