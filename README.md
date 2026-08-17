@@ -11,6 +11,9 @@ curl -fsSL https://oss.pages.moraviel.dev/useful-scripts/install.sh | sh
 The installer will ask whether you want **server** or **desktop** scripts and a device name for the welcome message.
 It also auto-detects the package manager (`apt` or `pacman`) on the target machine and installs the matching `system-Su` variant.
 
+If no terminal is available for the prompts (e.g. `curl | sh` without a controlling tty), the installer exits with an error instead of hanging.
+Run it non-interactively by setting `USEFUL_SCRIPTS_TYPE=server|desktop` and `USEFUL_SCRIPTS_DEVICE_NAME=<name>`.
+
 ## Scripts
 
 ### Server

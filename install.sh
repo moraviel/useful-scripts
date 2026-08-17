@@ -4,14 +4,34 @@ set -euo pipefail
 
 BASE_URL="https://oss.pages.moraviel.dev/useful-scripts"
 
-if [ ! -t 0 ]; then
-    exec </dev/tty
-fi
+# Piping this script via `curl | sh` leaves stdin attached to the download
+# stream rather than the terminal. Probe /dev/tty before reading from it so
+# a missing/unusable tty fails fast with a helpful message instead of
+# hanging forever on `read`.
+prompt() {
+    message="$1"
+    if ( : </dev/tty ) 2>/dev/null; then
+        printf '%s' "$message" >/dev/tty
+        IFS= read -r REPLY </dev/tty
+    elif [ -t 0 ]; then
+        printf '%s' "$message"
+        IFS= read -r REPLY
+    else
+        echo "No terminal available for interactive input." >&2
+        echo "Set USEFUL_SCRIPTS_TYPE=server|desktop and USEFUL_SCRIPTS_DEVICE_NAME=<name> to run non-interactively." >&2
+        exit 1
+    fi
+}
 
-echo "Select device type:"
-echo "  1) Server"
-echo "  2) Desktop"
-read -p "Choice [1/2]: " choice
+if [ -n "${USEFUL_SCRIPTS_TYPE:-}" ]; then
+    choice="$USEFUL_SCRIPTS_TYPE"
+else
+    echo "Select device type:"
+    echo "  1) Server"
+    echo "  2) Desktop"
+    prompt "Choice [1/2]: "
+    choice="$REPLY"
+fi
 
 case "$choice" in
     1|server|Server) TYPE="server" ;;
@@ -19,7 +39,12 @@ case "$choice" in
     *) echo "Invalid choice"; exit 1 ;;
 esac
 
-read -p "Enter your device name (for welcome message): " DEVICE_NAME
+if [ -n "${USEFUL_SCRIPTS_DEVICE_NAME:-}" ]; then
+    DEVICE_NAME="$USEFUL_SCRIPTS_DEVICE_NAME"
+else
+    prompt "Enter your device name (for welcome message): "
+    DEVICE_NAME="$REPLY"
+fi
 
 if command -v pacman >/dev/null 2>&1; then
     PKG_MANAGER="pacman"
