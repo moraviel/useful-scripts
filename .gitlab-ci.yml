@@ -6,6 +6,7 @@ pages:
   image: alpine:latest
   script:
     - mkdir -p public
+    - cp index.html public/index.html
     - cp install.sh public/install.sh
     - cp -r scripts public/scripts
   artifacts:

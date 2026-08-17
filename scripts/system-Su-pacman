@@ -1,0 +1,9 @@
+#!/bin/bash
+sudo pacman -Syu
+GREEN='\033[0;32m'
+NC='\033[0m'
+echo -e "${GREEN}SUCCESS${NC}"
+orphans=$(pacman -Qtdq || true)
+if [ -n "$orphans" ]; then
+    echo "$orphans" | sudo pacman -Rns -
+fi

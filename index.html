@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>useful-scripts</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+  }
+  h1 {
+    font-size: 1.9rem;
+    margin-bottom: 0.25rem;
+  }
+  p.lead {
+    color: var(--muted);
+    margin-top: 0;
+  }
+  pre {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+    font-size: 0.95rem;
+  }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  .copy-wrap {
+    position: relative;
+  }
+  .copy-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: var(--border);
+    color: var(--text);
+    border: none;
+    border-radius: 6px;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+  .copy-btn:hover { background: #3d444d; }
+  h2 {
+    margin-top: 2.5rem;
+    font-size: 1.2rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.4rem;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.92rem;
+  }
+  th, td {
+    text-align: left;
+    padding: 0.5rem 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+  th { color: var(--muted); font-weight: 600; }
+  td code { color: var(--accent); }
+  footer {
+    margin-top: 3rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>useful-scripts</h1>
+  <p class="lead">A collection of handy scripts for Linux server and desktop management.</p>
+
+  <h2>Quick install</h2>
+  <div class="copy-wrap">
+    <pre><code id="install-cmd">curl -fsSL https://oss.pages.moraviel.dev/useful-scripts/install.sh | sh</code></pre>
+    <button class="copy-btn" onclick="copyInstall()">Copy</button>
+  </div>
+  <p class="lead">The installer will ask whether you want <strong>server</strong> or <strong>desktop</strong> scripts and a device name for the welcome message. It also auto-detects the package manager (<code>apt</code> or <code>pacman</code>) and installs the matching <code>system-Su</code>.</p>
+
+  <h2>Server scripts</h2>
+  <table>
+    <tr><th>Script</th><th>Description</th></tr>
+    <tr><td><code>welcome</code></td><td>Show the MOTD welcome screen</td></tr>
+    <tr><td><code>nginx-template</code></td><td>Generate an nginx site config — <code>nginx-template &lt;service&gt; &lt;domain&gt; &lt;port&gt;</code></td></tr>
+    <tr><td><code>services-show</code></td><td>Show running Docker containers (name, command, status, ports)</td></tr>
+    <tr><td><code>services-Su</code></td><td>Pull latest images and restart all Docker Compose services in <code>/opt/configs</code></td></tr>
+    <tr><td><code>startAllServices</code></td><td>Start all Docker Compose services in <code>/opt/configs</code></td></tr>
+    <tr><td><code>stopAllServices</code></td><td>Stop all Docker Compose services in <code>/opt/configs</code></td></tr>
+    <tr><td><code>system-Su</code></td><td>Update packages — <code>apt update &amp;&amp; apt upgrade</code> (Ubuntu/Debian) or <code>pacman -Syu</code> (Arch), auto-detected</td></tr>
+  </table>
+
+  <h2>Desktop scripts</h2>
+  <table>
+    <tr><th>Script</th><th>Description</th></tr>
+    <tr><td><code>welcome</code></td><td>Show the MOTD welcome screen</td></tr>
+    <tr><td><code>system-Su</code></td><td>Update packages — <code>apt update &amp;&amp; apt upgrade</code> (Ubuntu/Debian) or <code>pacman -Syu</code> (Arch), auto-detected</td></tr>
+  </table>
+
+  <h2>MOTD</h2>
+  <p>The installer creates <code>/etc/update-motd.d/01-welcome</code> — a dynamic message-of-the-day that displays uptime, active sessions, CPU load, and RAM usage with a cute Tux cow.</p>
+
+  <footer>
+    Source on <a href="https://git.moraviel.dev/oss/useful-scripts">Moraviel's GitLab</a>.
+  </footer>
+</main>
+<script>
+function copyInstall() {
+  const text = document.getElementById('install-cmd').textContent;
+  navigator.clipboard.writeText(text);
+}
+</script>
+</body>
+</html>

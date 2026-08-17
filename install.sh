@@ -21,10 +21,18 @@ esac
 
 read -p "Enter your device name (for welcome message): " DEVICE_NAME
 
-if [ "$TYPE" = "server" ]; then
-    SCRIPTS="nginx-template services-show services-Su startAllServices stopAllServices system-Su welcome"
+if command -v pacman >/dev/null 2>&1; then
+    PKG_MANAGER="pacman"
+elif command -v apt >/dev/null 2>&1; then
+    PKG_MANAGER="apt"
 else
-    SCRIPTS="welcome system-Su"
+    echo "Unsupported package manager (expected apt or pacman)"; exit 1
+fi
+
+if [ "$TYPE" = "server" ]; then
+    SCRIPTS="nginx-template services-show services-Su startAllServices stopAllServices welcome"
+else
+    SCRIPTS="welcome"
 fi
 
 echo "Installing $TYPE scripts..."
@@ -34,6 +42,10 @@ for script in $SCRIPTS; do
     sudo curl -fsSL -o "/usr/local/bin/$script" "$BASE_URL/scripts/$script"
     sudo chmod +x "/usr/local/bin/$script"
 done
+
+echo "  Downloading system-Su ($PKG_MANAGER)..."
+sudo curl -fsSL -o "/usr/local/bin/system-Su" "$BASE_URL/scripts/system-Su-$PKG_MANAGER"
+sudo chmod +x "/usr/local/bin/system-Su"
 
 echo "  Creating /etc/update-motd.d/01-welcome..."
 sudo mkdir -p /etc/update-motd.d
