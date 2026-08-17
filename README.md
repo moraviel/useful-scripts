@@ -5,7 +5,7 @@ A collection of handy scripts for Linux server and desktop management.
 ## Quick Install
 
 ```bash
-curl -fsSL https://useful-scripts.pages.moraviel.dev/install.sh | sh
+curl -fsSL https://oss.pages.moraviel.dev/useful-scripts/install.sh | sh
 ```
 
 The installer will ask whether you want **server** or **desktop** scripts and a device name for the welcome message.
