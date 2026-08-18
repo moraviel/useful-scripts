@@ -48,10 +48,8 @@ fi
 
 if command -v pacman >/dev/null 2>&1; then
     PKG_MANAGER="pacman"
-    sudo pacman -S cowsay --noconfirm
 elif command -v apt >/dev/null 2>&1; then
     PKG_MANAGER="apt"
-    sudo apt install cowsay -y
 else
     echo "Unsupported package manager (expected apt or pacman)"; exit 1
 fi
