@@ -25,6 +25,6 @@ msg+="RAM Usage: $ram_usage"
 
 
 clear
-echo "$msg" | /usr/games/cowsay -n -f tux
+echo "$msg" | cowsay -n -f tux
 
 echo -e "${NC}"
