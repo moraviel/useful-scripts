@@ -76,7 +76,7 @@ sudo chmod +x "/usr/local/bin/system-Su"
 
 echo "  Creating /etc/update-motd.d/01-welcome..."
 sudo mkdir -p /etc/update-motd.d
-sudo curl -fsSL "$BASE_URL/opt/motd" | sed "s/user_device=''/user_device='$DEVICE_NAME'/" | sudo tee /etc/update-motd.d/01-welcome > /dev/null
+sudo curl -fsSL "$BASE_URL/opt/motd" | sed "s/user_device/to '$DEVICE_NAME'/" | sudo tee /etc/update-motd.d/01-welcome > /dev/null
 sudo chmod +x /etc/update-motd.d/01-welcome
 
 echo "Done."
