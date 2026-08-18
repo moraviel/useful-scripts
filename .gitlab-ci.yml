@@ -9,6 +9,7 @@ pages:
     - cp index.html public/index.html
     - cp install.sh public/install.sh
     - cp -r scripts public/scripts
+    - cp -r opt public/opt
   artifacts:
     paths:
       - public
